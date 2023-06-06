@@ -102,6 +102,22 @@ async function getRecipes() {
   // we're returning
   /**************************/
   // A4. TODO - Loop through each recipe in the RECIPE_URLS array constant
+
+  for (let recipe of RECIPE_URLS) {
+    try {
+      let response = await fetch(recipe);
+      let recipeJSON = await recipeResponse.json();
+      recipesArray.push(recipeJSON);
+      if (recipesArray.length === RECIPE_URLS.length) {
+        saveRecipesToStorage(recipesArray);
+        resolve(recipesArray);
+      }
+    }
+    catch (error) {
+      console.error(error);
+      reject(error);
+    }
+  }
   //            declared above
   // A5. TODO - Since we are going to be dealing with asynchronous code, create
   //            a try / catch block. A6-A9 will be in the try portion, A10-A11
